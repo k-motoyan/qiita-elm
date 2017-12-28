@@ -1,23 +1,13 @@
 module Main exposing (..)
 
-import Navigation exposing (Location, newUrl)
-import Route exposing (Route(..), parseLocation, routeToPathStr)
+import Navigation exposing (Location)
+import Route exposing (Route(..), parseLocation)
+import Model exposing (Model, PageState(..), initModel)
+import Update exposing (Msg(..), update)
 import Html exposing (Html, div)
 import Page.Home as Home
+import Views.Layout exposing (layout)
 import Views.NotFound as NotFound
-
-
-type PageState
-    = Ok Route
-    | NotFound
-
-
----- MODEL ----
-
-
-type alias Model =
-    {  pageState: PageState
-    }
 
 
 init : Location -> (Model, Cmd Msg)
@@ -25,41 +15,12 @@ init location =
     let
         pageState = location
                     |> parseLocation
-                    |> Maybe.andThen (\route -> Just(Ok route))
+                    |> Maybe.andThen (\route -> Just(Found route))
                     |> Maybe.withDefault NotFound
 
         model = { initModel | pageState = pageState }
     in
         update (TransitionPage pageState) model
-
-
-initModel : Model
-initModel =
-    { pageState = Ok Home
-    }
-
-
----- UPDATE ----
-
-
-type Msg
-    = ChangeLocation Location
-    | TransitionPage PageState
-
-
-update : Msg -> Model -> (Model, Cmd Msg)
-update msg model =
-    case msg of
-        ChangeLocation location ->
-            case parseLocation location of
-                Just route ->
-                    { model | pageState = Ok route } ! []
-                Nothing ->
-                    { model | pageState = NotFound } ! []
-
-        TransitionPage pageState ->
-            { model | pageState = pageState } ! []
-
 
 
 ---- VIEW ----
@@ -68,11 +29,11 @@ update msg model =
 view : Model -> Html Msg
 view model =
     case model.pageState of
-        Ok route ->
-            routeToView route
+        Found route ->
+            layout <| routeToView route
 
         NotFound ->
-            NotFound.view
+            layout NotFound.view
 
 
 

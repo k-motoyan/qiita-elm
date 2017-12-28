@@ -1,11 +1,25 @@
-module Views.Layout exposing (view)
+module Views.Layout exposing (layout)
 
 
-import Html exposing (Html, h1, div, text)
+import Html exposing (Html, section, h1, div, text, a)
+import Html.Attributes exposing (class, href)
+import Html.Events exposing (onClick)
+import Route exposing (Route(Home))
+import Model exposing (PageState(Found))
+import Update exposing (Msg(TransitionPage))
 
 
-view : Html msg
-view =
+layout : Html Msg -> Html Msg
+layout html =
     div []
-        [ h1 [] [ text "Qiita Elm" ]
+        [ section [ class "hero is-success" ]
+            [ div [ class "hero-body" ]
+                [ div [ class "container" ]
+                    [ h1 [ class "title" ]
+                        [ a [ onClick <| TransitionPage (Found Home) ] [ text "Qiita Client" ] ]
+                    ]
+                ]
+            ]
+        , section [ class "section" ]
+            [ div [ class "container"] [ html] ]
         ]
