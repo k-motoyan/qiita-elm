@@ -1,0 +1,1 @@
+module Entity.Qiita exposing (..)
