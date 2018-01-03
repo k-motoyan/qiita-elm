@@ -17,12 +17,12 @@ glob(root_path + '/src/**/*.elm', {}, (err, files) => {
         return 'src' + path.sep + m.replace(/\./g, path.sep) + '.elm';
     }).join(' ');
 
-    exec(test_cmd + ' ' + targets, (err, stdout, stderr) => {
+    const ch = exec(test_cmd + ' ' + targets, (err) => {
         if (err) {
             console.log(err);
-            return;
         }
-
-        console.log(stdout);
     });
+
+    ch.stdout.on('data', console.log);
+    ch.stderr.on('data', console.log);
 });
