@@ -1,0 +1,28 @@
+#!/usr/bin/env node
+
+const fs = require('fs');
+const path = require('path');
+const glob = require('glob');
+const exec = require('child_process').exec;
+
+const root_path = path.resolve(path.join(__dirname, '..'));
+const config_file_path = path.join(root_path, 'elm-package.json');
+
+const test_cmd = path.join(root_path, 'node_modules', '.bin', 'elm-doctest');
+
+const config = JSON.parse(fs.readFileSync(config_file_path, 'utf8'));
+
+glob(root_path + '/src/**/*.elm', {}, (err, files) => {
+    const targets = config['exposed-modules'].map((m) => {
+        return 'src' + path.sep + m.replace(/\./g, path.sep) + '.elm';
+    }).join(' ');
+
+    const ch = exec(test_cmd + ' ' + targets, (err) => {
+        if (err) {
+            console.log(err);
+        }
+    });
+
+    ch.stdout.on('data', console.log);
+    ch.stderr.on('data', console.log);
+});

@@ -7,7 +7,8 @@
         "src"
     ],
     "exposed-modules": [
-        "API.Qiita"
+        "API.Qiita",
+        "Json.Qiita.Decoder"
     ],
     "dependencies": {
         "NoRedInk/elm-decode-pipeline": "3.0.0 <= v < 4.0.0",
