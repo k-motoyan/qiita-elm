@@ -4,5 +4,8 @@
   },
   "dependencies": {
     "elm-doctest": "^0.3.6"
+  },
+  "devDependencies": {
+    "glob": "^7.1.2"
   }
 }
