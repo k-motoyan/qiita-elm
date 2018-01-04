@@ -1,4 +1,4 @@
-module Entity.Qiita exposing (User)
+module Entity.Qiita exposing (User, ItemTag)
 
 
 type alias User =
@@ -17,4 +17,10 @@ type alias User =
     , profile_image_url: String
     , twitter_screen_name: String
     , website_url: String
+    }
+
+
+type alias ItemTag =
+    { name: String
+    , versions: List String
     }
