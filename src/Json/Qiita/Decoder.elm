@@ -1,9 +1,9 @@
-module Json.Qiita.Decoder exposing (..)
+module Json.Qiita.Decoder exposing (decodeUser)
 
 
-import Json.Decode exposing (Decoder, int, string)
+import Json.Decode exposing (Decoder, list, int, string)
 import Json.Decode.Pipeline exposing (decode, required)
-import Entity.Qiita exposing (User)
+import Entity.Qiita exposing (User, ItemTag)
 
 
 {-| Qiita user object decoder.
@@ -67,3 +67,27 @@ decodeUser =
         |> required "profile_image_url" string
         |> required "twitter_screen_name" string
         |> required "website_url" string
+
+
+{-| Qiita items in tag object decoder.
+
+Usage:
+
+    >>> Json.Decode.decodeString
+    >>>     decodeItemTag
+    >>>     """
+    >>>         {
+    >>>             "name": "elm",
+    >>>             "versions": ["0.18.0", "0.19.0"]
+    >>>         }
+    >>>     """
+    Result.Ok
+        { name = "elm"
+        , versions = ["0.18.0", "0.19.0"]
+        }
+-}
+decodeItemTag : Decoder ItemTag
+decodeItemTag =
+    decode ItemTag
+        |> required "name" string
+        |> required "versions" (list string)
