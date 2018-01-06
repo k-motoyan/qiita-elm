@@ -7,6 +7,7 @@
         "src"
     ],
     "exposed-modules": [
+        "API.Header",
         "API.Qiita",
         "Json.Qiita.Decoder"
     ],
