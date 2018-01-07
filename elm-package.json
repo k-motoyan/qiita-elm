@@ -7,8 +7,8 @@
         "src"
     ],
     "exposed-modules": [
-        "API.Header",
-        "API.Qiita",
+        "Http.HeaderUtil",
+        "Http.Request.Qiita",
         "Json.Qiita.Decoder"
     ],
     "dependencies": {

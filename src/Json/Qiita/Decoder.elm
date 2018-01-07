@@ -1,5 +1,11 @@
 module Json.Qiita.Decoder exposing (decodeUser, decodeItems)
 
+{-| This module provides Qiita JSON resource of decoder.
+
+# Decoders
+@docs decodeUser, decodeItems
+
+-}
 
 import Json.Decode exposing (Decoder, list, int, string, bool)
 import Json.Decode.Extra exposing (date)

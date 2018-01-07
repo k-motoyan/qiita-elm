@@ -1,4 +1,4 @@
-module API.Header exposing
+module Http.HeaderUtil exposing
     ( ContentType(..) , contentTypeHeader
     )
 
