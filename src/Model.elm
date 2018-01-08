@@ -2,6 +2,7 @@ module Model exposing (Model, PageState(..), initModel)
 
 
 import Route exposing (Route(..))
+import Page.Home as Home
 
 
 type PageState
@@ -10,12 +11,14 @@ type PageState
 
 
 type alias Model =
-    {  pageState: PageState
+    { pageState: PageState
+    , homeModel: Home.Model
     }
 
 
 initModel : Model
 initModel =
     { pageState = Found Home
+    , homeModel = Home.initModel
     }
 

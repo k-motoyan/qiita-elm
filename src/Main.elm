@@ -30,18 +30,18 @@ view : Model -> Html Msg
 view model =
     case model.pageState of
         Found route ->
-            layout <| routeToView route
+            layout <| routeToView route model
 
         NotFound ->
             layout NotFound.view
 
 
 
-routeToView : Route -> Html Msg
-routeToView route =
+routeToView : Route -> Model -> Html Msg
+routeToView route model =
     case route of
         Home ->
-            Home.view
+            Home.view model.homeModel
 
 
 
