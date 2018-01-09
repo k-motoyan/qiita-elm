@@ -3,6 +3,7 @@ module Page.Home exposing (Model, initModel, view)
 
 import Html exposing (Html, h1, text)
 import Entity.Qiita exposing (Item)
+import Views.LoadingIndicator as LoadingIndicator
 
 
 -- Model
@@ -28,4 +29,7 @@ initModel =
 
 view : Model -> Html msg
 view model =
-    h1 [] [ text "Home" ]
+    if model.isLoading then
+        LoadingIndicator.view
+    else
+        h1 [] [ text "Home" ]
