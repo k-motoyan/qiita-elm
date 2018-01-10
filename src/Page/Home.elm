@@ -1,7 +1,9 @@
-module Page.Home exposing (Model, initModel, view)
+module Page.Home exposing (Model, initModel, Msg, update, view)
 
 
 import Html exposing (Html, h1, text)
+import Http
+import Http.Request.Qiita exposing (getItems)
 import Entity.Qiita exposing (Item)
 import Views.LoadingIndicator as LoadingIndicator
 
@@ -22,6 +24,31 @@ initModel =
     , isError = False
     , items = Nothing
     }
+
+
+-- Update
+
+
+type Msg
+    = LoadItems
+    | LoadItemsDone (Result Http.Error (List Item))
+
+
+update : Msg -> Model -> ( Model, Cmd Msg )
+update msg model =
+    case msg of
+        LoadItems ->
+            getItems
+                |> Http.send LoadItemsDone
+                |> List.singleton
+                |> (!) { model | isLoading = True, isError = False }
+
+        LoadItemsDone result ->
+            case result of
+                Ok items ->
+                    { model | isLoading = False, items = Just items } ! []
+                Err err ->
+                    { model | isLoading = False, isError = True } ! []
 
 
 -- View
