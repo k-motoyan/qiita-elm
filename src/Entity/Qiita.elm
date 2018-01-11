@@ -5,21 +5,21 @@ import Date exposing (Date)
 
 
 type alias User =
-    { description: String
-    , facebook_id: String
+    { description: Maybe String
+    , facebook_id: Maybe String
     , followees_count: Int
     , followers_count: Int
-    , github_login_name: String
+    , github_login_name: Maybe String
     , id: String
     , items_count: Int
-    , linkedin_id: String
-    , location: String
+    , linkedin_id: Maybe String
+    , location: Maybe String
     , name: String
-    , organization: String
+    , organization: Maybe String
     , permanent_id: Int
     , profile_image_url: String
-    , twitter_screen_name: String
-    , website_url: String
+    , twitter_screen_name: Maybe String
+    , website_url: Maybe String
     }
 
 
