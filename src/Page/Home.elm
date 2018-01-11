@@ -1,7 +1,8 @@
-module Page.Home exposing (Model, initModel, Msg, update, view)
+module Page.Home exposing (Model, initModel, Msg(..), update, view)
 
 
-import Html exposing (Html, h1, text)
+import Html exposing (Html, div, ul, li, h1, text)
+import Html.Attributes exposing (class)
 import Http
 import Http.Request.Qiita exposing (getItems)
 import Entity.Qiita exposing (Item)
@@ -59,4 +60,16 @@ view model =
     if model.isLoading then
         LoadingIndicator.view
     else
-        h1 [] [ text "Home" ]
+        div []
+            [ h1 [ class "title is-5" ] [ text "Home" ]
+            , listView model.items
+            ]
+
+
+listView : Maybe (List Item) -> Html msg
+listView items =
+    case items of
+        Just items ->
+            ul [] <| List.map (\item -> li [] [ text <| item.title ++ " - " ++ item.user.name ]) items
+        Nothing ->
+            div [] [ text "データが見つかりませんでした。" ]

@@ -7,7 +7,7 @@ module Json.Qiita.Decoder exposing (decodeUser, decodeItems)
 
 -}
 
-import Json.Decode exposing (Decoder, list, int, string, bool)
+import Json.Decode exposing (Decoder, list, int, string, bool, nullable)
 import Json.Decode.Extra exposing (date)
 import Json.Decode.Pipeline exposing (decode, required)
 import Entity.Qiita exposing (User, ItemTag, Item)
@@ -61,21 +61,21 @@ Usage:
 decodeUser : Decoder User
 decodeUser =
     decode User
-        |> required "description" string
-        |> required "facebook_id" string
+        |> required "description" (nullable string)
+        |> required "facebook_id" (nullable string)
         |> required "followees_count" int
         |> required "followers_count" int
-        |> required "github_login_name" string
+        |> required "github_login_name" (nullable string)
         |> required "id" string
         |> required "items_count" int
-        |> required "linkedin_id" string
-        |> required "location" string
+        |> required "linkedin_id" (nullable string)
+        |> required "location" (nullable string)
         |> required "name" string
-        |> required "organization" string
+        |> required "organization" (nullable string)
         |> required "permanent_id" int
         |> required "profile_image_url" string
-        |> required "twitter_screen_name" string
-        |> required "website_url" string
+        |> required "twitter_screen_name" (nullable string)
+        |> required "website_url" (nullable string)
 
 
 {-| Qiita items object decoder.
