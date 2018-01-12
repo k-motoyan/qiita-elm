@@ -5,7 +5,8 @@ import Route exposing (Route(..), parseLocation)
 import Model exposing (Model, PageState(..), initModel)
 import Update exposing (Msg(..), update)
 import Html exposing (Html, div)
-import Page.Home as Home
+import Page.Home as HomePage
+import Page.Item as ItemPage
 import Views.Layout exposing (layout)
 import Views.NotFound as NotFound
 
@@ -41,7 +42,13 @@ routeToView : Route -> Model -> Html Msg
 routeToView route model =
     case route of
         Home ->
-            Home.view model.homeModel
+            HomePage.view model.homeModel |> Html.map UpdateHomePage
+        Items _ ->
+            case model.itemModel of
+                Just itemModel ->
+                    ItemPage.view itemModel |> Html.map UpdateItemPage
+                Nothing ->
+                    NotFound.view
 
 
 
