@@ -3,6 +3,7 @@ module Page.Item exposing (Model, createModel, Msg(..), view)
 
 import Html exposing (Html, div, h1, text)
 import Html.Attributes exposing (class)
+import Markdown
 import Route exposing (Slug, slugToString)
 import Entity.Qiita exposing (Item)
 
@@ -53,6 +54,6 @@ type Msg
 view : Model -> Html msg
 view model =
     div []
-        [ h1 [ class "title is-5" ] [ text model.title ]
-        , div [] [ text model.contents ]
+        [ h1 [ class "title is-2" ] [ text model.title ]
+        , Markdown.toHtml [ class "content" ] model.contents
         ]
