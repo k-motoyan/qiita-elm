@@ -41,21 +41,21 @@ Usage:
     >>>         }
     >>>     """
     Result.Ok
-        { description = "a"
-        , facebook_id = "b"
+        { description = Just "a"
+        , facebook_id = Just "b"
         , followees_count = 0
         , followers_count = 1
-        , github_login_name = "c"
+        , github_login_name = Just "c"
         , id = "d"
         , items_count = 2
-        , linkedin_id = "e"
-        , location = "f"
+        , linkedin_id = Just "e"
+        , location = Just "f"
         , name = "g"
-        , organization = "h"
+        , organization = Just "h"
         , permanent_id = 3
         , profile_image_url = "i"
-        , twitter_screen_name = "j"
-        , website_url = "k"
+        , twitter_screen_name = Just "j"
+        , website_url = Just "k"
         }
 -}
 decodeUser : Decoder User
@@ -151,21 +151,21 @@ Usage:
                         Debug.crash "Date format error" e
             , url = "https://qiita.com/yaotti/items/4bd431809afb1bb99e4f"
             , user =
-                { description = "Hello, world."
-                , facebook_id = "yaotti"
+                { description = Just "Hello, world."
+                , facebook_id = Just "yaotti"
                 , followees_count = 100
                 , followers_count = 200
-                , github_login_name = "yaotti"
+                , github_login_name = Just "yaotti"
                 , id = "yaotti"
                 , items_count = 300
-                , linkedin_id = "yaotti"
-                , location = "Tokyo, Japan"
+                , linkedin_id = Just "yaotti"
+                , location = Just "Tokyo, Japan"
                 , name = "Hiroshige Umino"
-                , organization = "Increments Inc"
+                , organization = Just "Increments Inc"
                 , permanent_id = 1
                 , profile_image_url = "https://si0.twimg.com/profile_images/2309761038/1ijg13pfs0dg84sk2y0h_normal.jpeg"
-                , twitter_screen_name = "yaotti"
-                , website_url = "http://yaotti.hatenablog.com"
+                , twitter_screen_name = Just "yaotti"
+                , website_url = Just "http://yaotti.hatenablog.com"
                 }
             }
         ]
