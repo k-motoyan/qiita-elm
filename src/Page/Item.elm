@@ -3,7 +3,7 @@ module Page.Item exposing (Model, createModel, Msg(..), view)
 
 import Html exposing (Html, div, h1, text)
 import Html.Attributes exposing (class)
-import Markdown
+import Html.Attributes.Extra exposing (innerHtml)
 import Route exposing (Slug, slugToString)
 import Entity.Qiita exposing (Item)
 
@@ -29,7 +29,7 @@ createModel slug items =
 
 updateContents : Model -> Item -> Model
 updateContents model item =
-    { model | title = item.title, contents = item.body }
+    { model | title = item.title, contents = item.rendered_body }
 
 
 defaultModel : Model
@@ -55,5 +55,5 @@ view : Model -> Html msg
 view model =
     div []
         [ h1 [ class "title is-2" ] [ text model.title ]
-        , Markdown.toHtml [ class "content" ] model.contents
+        , div [ class "content", innerHtml model.contents ] []
         ]
