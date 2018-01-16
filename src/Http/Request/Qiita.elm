@@ -11,7 +11,7 @@ import Time exposing (Time, second)
 import Http exposing (Request, Error(..), request, emptyBody, expectJson)
 import Http.HeaderUtil exposing (ContentType(..), contentTypeHeader)
 import Entity.Qiita exposing (Item)
-import Json.Qiita.Decoder exposing (decodeItems)
+import Json.Qiita.Decoder exposing (decodeItems, decodeItem)
 
 
 -- Requests
@@ -27,6 +27,21 @@ getItems =
         , url = createUrl V2 "items"
         , body = emptyBody
         , expect = expectJson decodeItems
+        , timeout = Just timeOutValue
+        , withCredentials = True
+        }
+
+
+{-| Qiita API Request: GET /items/:item_id
+-}
+getItem : String -> Request Item
+getItem itemId =
+    Http.request
+        { method = "GET"
+        , headers = [ contentTypeHeader ApplicationJson ]
+        , url = createUrl V2 ("items/" ++ itemId)
+        , body = emptyBody
+        , expect = expectJson decodeItem
         , timeout = Just timeOutValue
         , withCredentials = True
         }

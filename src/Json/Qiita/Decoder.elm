@@ -1,9 +1,9 @@
-module Json.Qiita.Decoder exposing (decodeUser, decodeItems)
+module Json.Qiita.Decoder exposing (decodeUser, decodeItems, decodeItem)
 
 {-| This module provides Qiita JSON resource of decoder.
 
 # Decoders
-@docs decodeUser, decodeItems
+@docs decodeUser, decodeItems, decodeItem
 
 -}
 
@@ -175,16 +175,6 @@ decodeItems =
     list decodeItem
 
 
--- Private
-
-
-decodeItemTag : Decoder ItemTag
-decodeItemTag =
-    decode ItemTag
-        |> required "name" string
-        |> required "versions" (list string)
-
-
 decodeItem : Decoder Item
 decodeItem =
     decode Item
@@ -201,3 +191,13 @@ decodeItem =
         |> required "updated_at" date
         |> required "url" string
         |> required "user" decodeUser
+
+
+-- Private
+
+
+decodeItemTag : Decoder ItemTag
+decodeItemTag =
+    decode ItemTag
+        |> required "name" string
+        |> required "versions" (list string)
