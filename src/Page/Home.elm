@@ -1,13 +1,13 @@
 module Page.Home exposing (Model, initModel, Msg(..), update, view)
 
 
-import Html exposing (Html, div, ul, li, a, h1, text)
-import Html.Attributes exposing (class, href)
+import Html exposing (Html, div, article, nav, p, strong, br, figure, img, a, h1, text)
+import Html.Attributes exposing (class, src, alt, href)
 import Html.Events exposing (onClick)
 import Http
 import Http.Request.Qiita exposing (getItems)
 import Route exposing (Route(..), Slug(..))
-import Entity.Qiita exposing (Item)
+import Entity.Qiita exposing (Item, User)
 import Views.LoadingIndicator as LoadingIndicator
 
 
@@ -69,8 +69,7 @@ view model =
         LoadingIndicator.view
     else
         div []
-            [ h1 [ class "title is-5" ] [ text model.title ]
-            , listView model.items
+            [ listView model.items
             ]
 
 
@@ -80,7 +79,7 @@ listView items =
         Just items ->
             items
                 |> List.map (\item -> listItemView item)
-                |> ul []
+                |> div []
         Nothing ->
             div [] [ text "データが見つかりませんでした。" ]
 
@@ -90,7 +89,27 @@ listItemView item =
     let
         slug = Slug item.id
     in
-        li []
-            [ a [ onClick <| Transit (Items slug) ]
-                [ text item.title ]
+        a [ class "box", onClick <| Transit (Items slug) ]
+            [ article [ class "media"]
+                [ div [ class "media-left"]
+                    [ figure [ class "image is-64x64" ]
+                        [ img [ src item.user.profile_image_url, alt "image" ] [] ]
+                    ]
+                , div [ class "media-content" ]
+                    [ div [ class "content" ]
+                        [ p []
+                            [ strong [] [ text item.title ]
+                            ]
+                        ]
+                    , nav [ class "level is-mobile" ]
+                        [ div [ class "level-left"]
+                            [ qiitaLink item.url ]
+                        ]
+                    ]
+                ]
             ]
+
+
+qiitaLink : String -> Html msg
+qiitaLink url =
+    a [ class "level-item", href url ] [ text "本家で記事を読む" ]
