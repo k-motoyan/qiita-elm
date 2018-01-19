@@ -1,7 +1,7 @@
 module Page.Home exposing (Model, initModel, Msg(..), update, view)
 
 
-import Html exposing (Html, div, article, nav, p, strong, br, figure, img, a, h1, text)
+import Html exposing (..)
 import Html.Attributes exposing (class, src, alt, href)
 import Html.Events exposing (onClick)
 import Http
@@ -93,7 +93,7 @@ listItemView item =
             [ article [ class "media"]
                 [ div [ class "media-left"]
                     [ figure [ class "image is-64x64" ]
-                        [ img [ src item.user.profile_image_url, alt "image" ] [] ]
+                        [ userImage item.user.profile_image_url ]
                     ]
                 , div [ class "media-content" ]
                     [ div [ class "content" ]
@@ -108,6 +108,11 @@ listItemView item =
                     ]
                 ]
             ]
+
+
+userImage : String -> Html msg
+userImage profileImageUrl =
+    img [ src profileImageUrl, alt "image" ] []
 
 
 qiitaLink : String -> Html msg
