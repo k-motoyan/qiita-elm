@@ -2,13 +2,15 @@ module Page.Home exposing (Model, initModel, Msg(..), update, view)
 
 
 import Html exposing (..)
-import Html.Attributes exposing (class, src, alt, href)
+import Html.Attributes exposing (class, style, src, alt, href)
 import Html.Events exposing (onClick)
+import Color exposing (red)
 import Http
 import Http.Request.Qiita exposing (getItems)
 import Route exposing (Route(..), Slug(..))
 import Entity.Qiita exposing (Item, User)
 import Views.LoadingIndicator as LoadingIndicator
+import Material.Icons.Action exposing (favorite)
 
 
 -- Model
@@ -103,7 +105,8 @@ listItemView item =
                         ]
                     , nav [ class "level is-mobile" ]
                         [ div [ class "level-left"]
-                            [ qiitaLink item.url ]
+                            [ qiitaLikeIcon item.likes_count
+                            ]
                         ]
                     ]
                 ]
@@ -118,3 +121,12 @@ userImage profileImageUrl =
 qiitaLink : String -> Html msg
 qiitaLink url =
     a [ class "level-item", href url ] [ text "本家で記事を読む" ]
+
+
+qiitaLikeIcon : Int -> Html msg
+qiitaLikeIcon likesCount =
+    span [ class "level-item" ]
+        [ favorite red 16
+        , span [ style [ ("margin-left", "4px") ] ]
+            [ text (likesCount |> toString) ]
+        ]
