@@ -10,7 +10,7 @@ import Http.Request.Qiita exposing (getItems)
 import Route exposing (Route(..), Slug(..))
 import Entity.Qiita exposing (Item, User)
 import Views.LoadingIndicator as LoadingIndicator
-import Material.Icons.Action exposing (favorite)
+import Material.Icons.Action as ActionIcon
 
 
 -- Model
@@ -105,7 +105,7 @@ listItemView item =
                         ]
                     , nav [ class "level is-mobile" ]
                         [ div [ class "level-left"]
-                            [ qiitaLikeIcon item.likes_count
+                            [ qiitaLikeIcon item
                             ]
                         ]
                     ]
@@ -123,10 +123,10 @@ qiitaLink url =
     a [ class "level-item", href url ] [ text "本家で記事を読む" ]
 
 
-qiitaLikeIcon : Int -> Html msg
-qiitaLikeIcon likesCount =
+qiitaLikeIcon : Item -> Html msg
+qiitaLikeIcon item =
     span [ class "level-item" ]
-        [ favorite red 16
+        [ ActionIcon.favorite red 16
         , span [ style [ ("margin-left", "4px") ] ]
-            [ text (likesCount |> toString) ]
+            [ text (item.likes_count |> toString) ]
         ]
