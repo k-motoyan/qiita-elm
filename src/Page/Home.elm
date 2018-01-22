@@ -95,7 +95,7 @@ listItemView item =
             [ article [ class "media"]
                 [ div [ class "media-left"]
                     [ figure [ class "image is-64x64" ]
-                        [ userImage item.user.profile_image_url ]
+                        [ userImage item.user ]
                     ]
                 , div [ class "media-content" ]
                     [ div [ class "content" ]
@@ -113,14 +113,9 @@ listItemView item =
             ]
 
 
-userImage : String -> Html msg
-userImage profileImageUrl =
-    img [ src profileImageUrl, alt "image" ] []
-
-
-qiitaLink : String -> Html msg
-qiitaLink url =
-    a [ class "level-item", href url ] [ text "本家で記事を読む" ]
+userImage : User -> Html msg
+userImage user =
+    img [ src user.profile_image_url, alt "image" ] []
 
 
 qiitaLikeIcon : Item -> Html msg
