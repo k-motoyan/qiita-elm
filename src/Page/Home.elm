@@ -4,13 +4,14 @@ module Page.Home exposing (Model, initModel, Msg(..), update, view)
 import Html exposing (..)
 import Html.Attributes exposing (class, style, src, alt, href)
 import Html.Events exposing (onClick)
-import Color exposing (red)
+import Color exposing (red, darkGrey)
 import Http
 import Http.Request.Qiita exposing (getItems)
 import Route exposing (Route(..), Slug(..))
 import Entity.Qiita exposing (Item, User)
 import Views.LoadingIndicator as LoadingIndicator
-import Material.Icons.Action exposing (favorite)
+import Material.Icons.Action as ActionIcon
+import Material.Icons.Communication as CommunicationIcon
 
 
 -- Model
@@ -95,7 +96,7 @@ listItemView item =
             [ article [ class "media"]
                 [ div [ class "media-left"]
                     [ figure [ class "image is-64x64" ]
-                        [ userImage item.user.profile_image_url ]
+                        [ userImage item.user ]
                     ]
                 , div [ class "media-content" ]
                     [ div [ class "content" ]
@@ -105,7 +106,8 @@ listItemView item =
                         ]
                     , nav [ class "level is-mobile" ]
                         [ div [ class "level-left"]
-                            [ qiitaLikeIcon item.likes_count
+                            [ qiitaLikeIcon item
+                            , qiitaCommentIcon item
                             ]
                         ]
                     ]
@@ -113,20 +115,38 @@ listItemView item =
             ]
 
 
-userImage : String -> Html msg
-userImage profileImageUrl =
-    img [ src profileImageUrl, alt "image" ] []
+userImage : User -> Html msg
+userImage user =
+    img [ src user.profile_image_url, alt "image" ] []
 
 
-qiitaLink : String -> Html msg
-qiitaLink url =
-    a [ class "level-item", href url ] [ text "本家で記事を読む" ]
+iconSize : Int
+iconSize = 18
 
 
-qiitaLikeIcon : Int -> Html msg
-qiitaLikeIcon likesCount =
+iconStyle : Attribute msg
+iconStyle =
+    style
+        [ ("margin-left", "4px")
+        ]
+
+
+countText : Int -> Html msg
+countText count =
+    text (count |> toString)
+
+
+qiitaLikeIcon : Item -> Html msg
+qiitaLikeIcon item =
     span [ class "level-item" ]
-        [ favorite red 16
-        , span [ style [ ("margin-left", "4px") ] ]
-            [ text (likesCount |> toString) ]
+        [ ActionIcon.favorite_border red iconSize
+        , span [ iconStyle ] [ countText item.likes_count ]
+        ]
+
+
+qiitaCommentIcon : Item -> Html msg
+qiitaCommentIcon item =
+    span [ class "level-item" ]
+        [ CommunicationIcon.chat_bubble_outline darkGrey iconSize
+        , span [ iconStyle ] [ countText item.reactions_count ]
         ]
