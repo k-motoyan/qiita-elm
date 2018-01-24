@@ -1,6 +1,7 @@
 module Page.Home exposing (Model, initModel, Msg(..), update, view)
 
 
+import Basics.Extra exposing ((=>))
 import Html exposing (..)
 import Html.Attributes exposing (class, style, src, alt, href)
 import Html.Events exposing (onClick)
@@ -49,8 +50,7 @@ update msg model =
         LoadItems ->
             getItems
                 |> Http.send LoadItemsDone
-                |> List.singleton
-                |> (!) { model | isLoading = True, isError = False }
+                |> (=>) { model | isLoading = True, isError = False }
 
         LoadItemsDone result ->
             case result of
