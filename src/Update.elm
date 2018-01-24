@@ -3,6 +3,7 @@ module Update exposing (Msg(..), update)
 
 import Task exposing (succeed, perform)
 import Tuple exposing (mapFirst, mapSecond)
+import Basics.Extra exposing ((=>))
 import Navigation exposing (Location, newUrl)
 import Model exposing (Model, PageState(..))
 import Route exposing (Route(..), parseLocation, routeToPathStr, slugToString)
@@ -32,8 +33,7 @@ update msg model =
                 Found route ->
                     routeToPathStr route
                         |> newUrl
-                        |> List.singleton
-                        |> (!) model
+                        |> (=>) model
                 NotFound ->
                     { model | pageState = pageState } ! []
 
@@ -59,8 +59,7 @@ initRoute route model =
         Home ->
             succeed HomePage.LoadItems
                 |> perform (\msg -> UpdateHomePage msg)
-                |> List.singleton
-                |> (!) model
+                |> (=>) model
 
         Items slug ->
             case model.homeModel.items of
@@ -74,5 +73,4 @@ transitPage : Route -> Model -> (Model, Cmd Msg)
 transitPage route model =
     succeed (Found route)
         |> perform (\page -> TransitionPage page)
-        |> List.singleton
-        |> (!) model
+        |> (=>) model
