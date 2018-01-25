@@ -1,10 +1,13 @@
 module Page.Item exposing (Model, createModel, Msg(..), view)
 
 
+import Basics.Extra exposing ((=>), swap)
+import Http
 import Html exposing (Html, div, h1, text)
 import Html.Attributes exposing (class)
 import Html.Attributes.Extra exposing (innerHtml)
 import Route exposing (Slug, slugToString)
+import Http.Request.Qiita exposing (getItem)
 import Entity.Qiita exposing (Item)
 
 
@@ -45,7 +48,30 @@ defaultModel =
 
 
 type Msg
-    = NoOp
+    = LoadItem String
+    | LoadItemDone (Result Http.Error Item)
+
+
+update : Msg -> Model -> ( Model, Cmd Msg )
+update msg model =
+    case msg of
+        LoadItem id ->
+            getItem id
+                |> Http.send LoadItemDone
+                |> (=>) { model | isLoading = True, isError = False }
+
+        LoadItemDone result ->
+            let
+                newModel = { model | isLoading = False, isError = True }
+            in
+                case result of
+                    Ok item ->
+                        item
+                            |> updateContents newModel
+                            |> (=>) Cmd.none
+                            |> swap
+                    Err err ->
+                        newModel ! []
 
 
 -- View
