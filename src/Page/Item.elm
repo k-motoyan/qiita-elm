@@ -1,4 +1,4 @@
-module Page.Item exposing (Model, createModel, Msg(..), view)
+module Page.Item exposing (Model, createModel, Msg(..), update, view)
 
 
 import Basics.Extra exposing ((=>), swap)

@@ -43,11 +43,21 @@ update msg model =
                     transitPage route model
                 _ ->
                     HomePage.update msg model.homeModel
-                        |> mapFirst (\model_ -> { model | homeModel = model_ })
-                        |> mapSecond (\msg_ -> Cmd.map (\a -> UpdateHomePage a) msg_)
+                        |> mapFirst
+                            (\model_ -> { model | homeModel = model_ })
+                        |> mapSecond
+                            (\msg_ -> Cmd.map (\a -> UpdateHomePage a) msg_)
 
         UpdateItemPage msg ->
-            model ! []
+            case model.itemModel of
+                Just itemModel ->
+                    ItemPage.update msg itemModel
+                        |> mapFirst
+                            (\model_ -> { model | itemModel = Just model_ })
+                        |> mapSecond
+                            (\msg_ -> Cmd.map (\a -> UpdateItemPage a) msg_)
+                Nothing ->
+                    model ! []
 
 
 -- Private
