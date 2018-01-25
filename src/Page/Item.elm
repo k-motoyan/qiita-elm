@@ -1,4 +1,8 @@
-module Page.Item exposing (Model, createModel, Msg(..), update, view)
+module Page.Item exposing
+    ( Model, createModel, defaultModel
+    , Msg(..), update
+    , view
+    )
 
 
 import Basics.Extra exposing ((=>), swap)
@@ -37,7 +41,7 @@ updateContents model item =
 
 defaultModel : Model
 defaultModel =
-    { isLoading = False
+    { isLoading = True
     , isError = False
     , title = ""
     , contents = ""
@@ -66,8 +70,7 @@ update msg model =
             in
                 case result of
                     Ok item ->
-                        item
-                            |> updateContents newModel
+                        updateContents newModel item
                             |> (=>) Cmd.none
                             |> swap
                     Err err ->
