@@ -13,6 +13,7 @@ import Html.Attributes.Extra exposing (innerHtml)
 import Route exposing (Slug, slugToString)
 import Http.Request.Qiita exposing (getItem)
 import Entity.Qiita exposing (Item)
+import Views.LoadingIndicator as LoadingIndicator
 
 
 -- Model
@@ -41,7 +42,7 @@ updateContents model item =
 
 defaultModel : Model
 defaultModel =
-    { isLoading = True
+    { isLoading = False
     , isError = False
     , title = ""
     , contents = ""
@@ -82,7 +83,10 @@ update msg model =
 
 view : Model -> Html msg
 view model =
-    div []
-        [ h1 [ class "title is-2" ] [ text model.title ]
-        , div [ class "content", innerHtml model.contents ] []
-        ]
+    if model.isLoading then
+        LoadingIndicator.view
+    else
+        div []
+            [ h1 [ class "title is-2" ] [ text model.title ]
+            , div [ class "content", innerHtml model.contents ] []
+            ]
