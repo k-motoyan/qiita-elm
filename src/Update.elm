@@ -43,11 +43,22 @@ update msg model =
                     transitPage route model
                 _ ->
                     HomePage.update msg model.homeModel
-                        |> mapFirst (\model_ -> { model | homeModel = model_ })
-                        |> mapSecond (\msg_ -> Cmd.map (\a -> UpdateHomePage a) msg_)
+                        |> mapFirst
+                            (\model_ -> { model | homeModel = model_ })
+                        |> mapSecond
+                            (\msg_ -> Cmd.map (\a -> UpdateHomePage a) msg_)
 
         UpdateItemPage msg ->
-            model ! []
+            let
+                newModel =
+                    model.itemModel
+                        |> Maybe.withDefault ItemPage.defaultModel
+            in
+                ItemPage.update msg newModel
+                    |> mapFirst
+                        (\model_ -> { model | itemModel = Just model_ })
+                    |> mapSecond
+                        (\msg_ -> Cmd.map (\a -> UpdateItemPage a) msg_)
 
 
 -- Private
@@ -66,7 +77,12 @@ initRoute route model =
                 Just items ->
                     { model | itemModel = ItemPage.createModel slug items } ! []
                 Nothing ->
-                    model ! []
+                    let
+                        id = slugToString slug
+                    in
+                        succeed (ItemPage.LoadItem id)
+                            |> perform (\msg -> UpdateItemPage msg)
+                            |> (=>) model
 
 
 transitPage : Route -> Model -> (Model, Cmd Msg)

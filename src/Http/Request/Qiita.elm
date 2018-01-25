@@ -1,9 +1,9 @@
-module Http.Request.Qiita exposing (getItems)
+module Http.Request.Qiita exposing (getItems, getItem)
 
 {-| This module provides Qiita API Http Request functions.
 
 # Requests
-@docs getItems
+@docs getItems, getItem
 
 -}
 

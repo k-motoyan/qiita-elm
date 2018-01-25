@@ -1,11 +1,19 @@
-module Page.Item exposing (Model, createModel, Msg(..), view)
+module Page.Item exposing
+    ( Model, createModel, defaultModel
+    , Msg(..), update
+    , view
+    )
 
 
+import Basics.Extra exposing ((=>), swap)
+import Http
 import Html exposing (Html, div, h1, text)
 import Html.Attributes exposing (class)
 import Html.Attributes.Extra exposing (innerHtml)
 import Route exposing (Slug, slugToString)
+import Http.Request.Qiita exposing (getItem)
 import Entity.Qiita exposing (Item)
+import Views.LoadingIndicator as LoadingIndicator
 
 
 -- Model
@@ -45,7 +53,29 @@ defaultModel =
 
 
 type Msg
-    = NoOp
+    = LoadItem String
+    | LoadItemDone (Result Http.Error Item)
+
+
+update : Msg -> Model -> ( Model, Cmd Msg )
+update msg model =
+    case msg of
+        LoadItem id ->
+            getItem id
+                |> Http.send LoadItemDone
+                |> (=>) { model | isLoading = True, isError = False }
+
+        LoadItemDone result ->
+            let
+                newModel = { model | isLoading = False, isError = True }
+            in
+                case result of
+                    Ok item ->
+                        updateContents newModel item
+                            |> (=>) Cmd.none
+                            |> swap
+                    Err err ->
+                        newModel ! []
 
 
 -- View
@@ -53,7 +83,10 @@ type Msg
 
 view : Model -> Html msg
 view model =
-    div []
-        [ h1 [ class "title is-2" ] [ text model.title ]
-        , div [ class "content", innerHtml model.contents ] []
-        ]
+    if model.isLoading then
+        LoadingIndicator.view
+    else
+        div []
+            [ h1 [ class "title is-2" ] [ text model.title ]
+            , div [ class "content", innerHtml model.contents ] []
+            ]
