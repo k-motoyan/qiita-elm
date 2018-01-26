@@ -1,7 +1,7 @@
 module Page.Home exposing (Model, initModel, Msg(..), update, view)
 
 
-import Basics.Extra exposing ((=>))
+import Basics.Extra exposing ((=>), swap)
 import Html exposing (..)
 import Html.Attributes exposing (class, style, src, alt, href)
 import Html.Events exposing (onClick)
