@@ -54,10 +54,6 @@ type Version
     = V2
 
 
-basePath : String
-basePath = "https://qiita.com/api/"
-
-
 timeOutValue : Time
 timeOutValue = 10 * second
 
@@ -70,4 +66,4 @@ versionToString version =
 
 createUrl : Version -> String -> String
 createUrl version path =
-    basePath ++ versionToString version ++ "/" ++ path
+    "https://qiita.com/api/" ++ versionToString version ++ "/" ++ path
