@@ -17,13 +17,18 @@ import UrlParser exposing
     , map
     , top
     , s
+    , string
     , (</>)
     )
+
+
+type alias UserID = String
 
 
 type Route
     = Home
     | Items Slug
+    | Users UserID
 
 
 type Slug
@@ -47,6 +52,8 @@ routeToPathStr route =
             "/"
         Items slug ->
             "/items/" ++ (slugToString slug)
+        Users id ->
+            "/users/" ++ id
 
 
 -- Private
@@ -58,6 +65,7 @@ matchers =
         [ map Home top
         , map Home (s "/")
         , map Items (s "items" </> slugParser)
+        , map Users (s "users" </> string)
         ]
 
 
