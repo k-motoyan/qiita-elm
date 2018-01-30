@@ -1,9 +1,9 @@
-module Json.Qiita.Decoder exposing (decodeUser, decodeItems, decodeItem)
+module Json.Qiita.Decoder exposing (decodeUsers, decodeUser, decodeItems, decodeItem)
 
 {-| This module provides Qiita JSON resource of decoder.
 
 # Decoders
-@docs decodeUser, decodeItems, decodeItem
+@docs decodeUsers, decodeUser, decodeItems, decodeItem
 
 -}
 
@@ -11,6 +11,13 @@ import Json.Decode exposing (Decoder, list, int, string, bool, nullable)
 import Json.Decode.Extra exposing (date)
 import Json.Decode.Pipeline exposing (decode, required)
 import Entity.Qiita exposing (User, ItemTag, Item)
+
+
+{-| Qiita users object decoder.
+-}
+decodeUsers : Decoder (List User)
+decodeUsers =
+    list decodeUser
 
 
 {-| Qiita user object decoder.
