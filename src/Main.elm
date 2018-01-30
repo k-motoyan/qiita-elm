@@ -43,12 +43,16 @@ routeToView route model =
     case route of
         Home ->
             HomePage.view model.homeModel |> Html.map UpdateHomePage
+
         Items _ ->
             case model.itemModel of
                 Just itemModel ->
                     ItemPage.view itemModel |> Html.map UpdateItemPage
                 Nothing ->
                     NotFound.view
+
+        Users _ ->
+            NotFound.view
 
 
 
