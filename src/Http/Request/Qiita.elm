@@ -1,12 +1,12 @@
 module Http.Request.Qiita exposing
     ( getItems, getItem
-    , getFollowees, getFollowers
+    , getUserItems, getFollowees, getFollowers
     )
 
 {-| This module provides Qiita API Http Request functions.
 
 # Requests
-@docs getItems, getItem, getFollowees, getFollowers
+@docs getItems, getItem, getUserItems, getFollowees, getFollowers
 
 -}
 
@@ -45,6 +45,21 @@ getItem itemId =
         , url = createUrl V2 ("items/" ++ itemId)
         , body = emptyBody
         , expect = expectJson decodeItem
+        , timeout = Just timeOutValue
+        , withCredentials = True
+        }
+
+
+{-| Qiita API Request: GET /users/:user_id/items
+-}
+getUserItems : String -> Request (List Item)
+getUserItems userId =
+    Http.request
+        { method = "GET"
+        , headers = [ contentTypeHeader ApplicationJson ]
+        , url = createUrl V2 ("users/" ++ userId ++ "/items")
+        , body = emptyBody
+        , expect = expectJson decodeItems
         , timeout = Just timeOutValue
         , withCredentials = True
         }
