@@ -92,16 +92,14 @@ listItemView item =
     let
         slug = Slug item.id
     in
-        a [ class "box", onClick <| Transit (Items slug) ]
+        div [ class "box" ]
             [ article [ class "media"]
-                [ div [ class "media-left"]
-                    [ figure [ class "image is-64x64" ]
-                        [ userImage item.user ]
-                    ]
+                [ div [ class "media-left"] [ userImage item.user ]
                 , div [ class "media-content" ]
                     [ div [ class "content" ]
                         [ p []
-                            [ strong [] [ text item.title ]
+                            [ a [ onClick <| Transit (Items slug) ]
+                                [ strong [] [ text item.title ] ]
                             ]
                         ]
                     , nav [ class "level is-mobile" ]
@@ -115,9 +113,10 @@ listItemView item =
             ]
 
 
-userImage : User -> Html msg
+userImage : User -> Html Msg
 userImage user =
-    img [ src user.profile_image_url, alt "image" ] []
+    a [ class "image is-64x64", onClick <| Transit (Users user.id) ]
+        [ img [ src user.profile_image_url, alt ("@" ++ user.id) ] [] ]
 
 
 iconSize : Int
