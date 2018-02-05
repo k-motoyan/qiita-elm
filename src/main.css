@@ -3,6 +3,10 @@ body {
   margin: 0;
 }
 
+a img:hover {
+  opacity: .7;
+}
+
 /* see: http://tobiasahlin.com/spinkit/ */
 .spinner {
   margin: 0px auto 0;
