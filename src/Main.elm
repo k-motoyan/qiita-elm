@@ -7,6 +7,7 @@ import Update exposing (Msg(..), update)
 import Html exposing (Html, div)
 import Page.Home as HomePage
 import Page.Item as ItemPage
+import Page.User as UserPage
 import Views.Layout exposing (layout)
 import Views.NotFound as NotFound
 
@@ -52,7 +53,7 @@ routeToView route model =
                     NotFound.view
 
         Users _ ->
-            NotFound.view
+            UserPage.view
 
 
 

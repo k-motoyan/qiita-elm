@@ -1,4 +1,4 @@
-module Views.Tabs exposing (view)
+module Views.Tabs exposing (view, TabItem)
 
 import Html exposing (Html, div, ul, li, a, text)
 import Html.Attributes exposing (class)
