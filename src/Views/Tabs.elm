@@ -14,7 +14,7 @@ type alias TabItem =
 
 view : List (TabItem) -> Html Msg
 view tabItems =
-    div [ class "tabs" ]
+    div [ class "tabs is-centered" ]
         [ ul []
             <| List.map tabItemView tabItems
         ]
