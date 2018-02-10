@@ -11,9 +11,9 @@ import Views.LoadingIndicator as LoadingIndicator
 
 tabItems : List (TabItem)
 tabItems =
-    [ { title = "TODO1", msg = TransitionPage (Found Home) }
-    , { title = "TODO2", msg = TransitionPage (Found Home) }
-    , { title = "TODO3", msg = TransitionPage (Found Home) }
+    [ { title = "ストックした投稿", msg = TransitionPage (Found Home) }
+    , { title = "自分の投稿", msg = TransitionPage (Found Home) }
+    , { title = "フォロワー／フォロイー", msg = TransitionPage (Found Home) }
     ]
 
 
