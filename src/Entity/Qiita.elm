@@ -1,4 +1,4 @@
-module Entity.Qiita exposing (User, ItemTag, Item)
+module Entity.Qiita exposing (User, ItemTag, Item, StockItem)
 
 
 import Date exposing (Date)
@@ -43,4 +43,22 @@ type alias Item =
     , updated_at: Date
     , url: String
     , user: User
+    }
+
+
+type alias StockItem =
+    { rendered_body: String
+    , body: String
+    , comments_count: Int
+    , created_at: Date
+    , id: String
+    , likes_count: Int
+    , private: Bool
+    , reactions_count: Int
+    , tags: List ItemTag
+    , title: String
+    , updated_at: Date
+    , url: String
+    , user: User
+    , page_views_count: Int
     }
