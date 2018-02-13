@@ -14,7 +14,9 @@ import Time exposing (Time, second)
 import Http exposing (Request, Error(..), request, emptyBody, expectJson)
 import Http.HeaderUtil exposing (ContentType(..), contentTypeHeader)
 import Entity.Qiita exposing (Item, User, StockItem)
-import Json.Qiita.Decoder exposing (decodeItems, decodeItem, decodeUsers)
+import Json.Qiita.Decoder exposing
+    ( decodeItems, decodeItem, decodeUsers, decodeStockItems
+    )
 
 
 -- Requests
