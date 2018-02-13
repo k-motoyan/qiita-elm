@@ -1,13 +1,13 @@
 module Json.Qiita.Decoder exposing
     ( decodeUsers, decodeUser
     , decodeItems, decodeItem
-    , decodeStockItem
+    , decodeStockItems, decodeStockItem
     )
 
 {-| This module provides Qiita JSON resource of decoder.
 
 # Decoders
-@docs decodeUsers, decodeUser, decodeItems, decodeItem, decodeStockItem
+@docs decodeUsers, decodeUser, decodeItems, decodeItem, decodeStockItems, decodeStockItem
 
 -}
 
@@ -290,6 +290,13 @@ decodeItem =
         |> required "updated_at" date
         |> required "url" string
         |> required "user" decodeUser
+
+
+{-| Qiita stock items object decoder.
+-}
+decodeStockItems : Decoder (List StockItem)
+decodeStockItems =
+    list decodeStockItem
 
 
 {-| Qiita stock item object decoder.
