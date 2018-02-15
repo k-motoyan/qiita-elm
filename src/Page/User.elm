@@ -1,4 +1,4 @@
-module Page.User exposing (Model, view)
+module Page.User exposing (Model, initModel, view)
 
 import Html exposing (Html, div, text)
 import Html.Attributes exposing (class)
@@ -21,14 +21,29 @@ type alias Model =
     }
 
 
+initModel : User -> Model
+initModel user =
+    { my = user
+    , stockItems = Nothing
+    , followers = Nothing
+    , followees = Nothing
+    }
+
+
 -- View
 
 
 tabItems : List (TabItem)
 tabItems =
-    [ { title = "ストックした投稿", msg = TransitionPage (Found Home) }
-    , { title = "自分の投稿", msg = TransitionPage (Found Home) }
-    , { title = "フォロワー／フォロイー", msg = TransitionPage (Found Home) }
+    [ { title = "ストックした投稿"
+      , msg = TransitionPage (Found Home)
+      }
+    , { title = "自分の投稿"
+      , msg = TransitionPage (Found Home)
+      }
+    , { title = "フォロワー／フォロイー"
+      , msg = TransitionPage (Found Home)
+      }
     ]
 
 
