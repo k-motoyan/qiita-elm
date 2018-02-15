@@ -35,9 +35,15 @@ initModel user =
 
 tabItems : List (TabItem)
 tabItems =
-    [ { title = "ストックした投稿", msg = TransitionPage (Found Home) }
-    , { title = "自分の投稿", msg = TransitionPage (Found Home) }
-    , { title = "フォロワー／フォロイー", msg = TransitionPage (Found Home) }
+    [ { title = "ストックした投稿"
+      , msg = TransitionPage (Found Home)
+      }
+    , { title = "自分の投稿"
+      , msg = TransitionPage (Found Home)
+      }
+    , { title = "フォロワー／フォロイー"
+      , msg = TransitionPage (Found Home)
+      }
     ]
 
 
