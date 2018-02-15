@@ -1,4 +1,4 @@
-module Page.User exposing (Model, view)
+module Page.User exposing (Model, initModel, view)
 
 import Html exposing (Html, div, text)
 import Html.Attributes exposing (class)
@@ -18,6 +18,15 @@ type alias Model =
     , stockItems: Maybe (List StockItem)
     , followers: Maybe (List User)
     , followees: Maybe (List User)
+    }
+
+
+initModel : User -> Model
+initModel user =
+    { my = user
+    , stockItems = Nothing
+    , followers = Nothing
+    , followees = Nothing
     }
 
 
