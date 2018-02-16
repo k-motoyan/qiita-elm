@@ -53,7 +53,7 @@ routeToView route model =
                     NotFound.view
 
         Users _ ->
-            UserPage.view
+            UserPage.view |> Html.map UpdateUserPage
 
 
 

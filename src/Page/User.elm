@@ -1,12 +1,10 @@
-module Page.User exposing (Model, initModel, view)
+module Page.User exposing (Model, initModel, Msg(..), view)
 
 import Html exposing (Html, div, text)
 import Html.Attributes exposing (class)
 import Route exposing (Route(..))
-import Model exposing (PageState(Found))
-import Update exposing (Msg(..))
 import Entity.Qiita exposing (User, StockItem)
-import Views.Tabs as Tabs exposing (TabItem)
+import Views.Tabs as Tabs
 import Views.LoadingIndicator as LoadingIndicator
 
 
@@ -30,21 +28,14 @@ initModel user =
     }
 
 
+-- Update
+
+
+type Msg
+    = Transit Route
+
+
 -- View
-
-
-tabItems : List (TabItem)
-tabItems =
-    [ { title = "ストックした投稿"
-      , msg = TransitionPage (Found Home)
-      }
-    , { title = "自分の投稿"
-      , msg = TransitionPage (Found Home)
-      }
-    , { title = "フォロワー／フォロイー"
-      , msg = TransitionPage (Found Home)
-      }
-    ]
 
 
 view : Html Msg
@@ -54,3 +45,49 @@ view =
         , div [ class "contents" ]
             [ LoadingIndicator.view ]
         ]
+
+
+type Tab
+    = Stocks
+    | Posts
+    | Follow
+
+
+tabItems : List ({ title: String, msg: Msg })
+tabItems =
+    [ { title = Stocks |> tabToTitle
+      , msg = Stocks |> tabToRoute |> Transit
+      }
+    , { title = Posts |> tabToTitle
+      , msg = Posts |> tabToRoute |> Transit
+      }
+    , { title = Follow |> tabToTitle
+      , msg = Follow |> tabToRoute |> Transit
+      }
+    ]
+
+
+tabToTitle : Tab -> String
+tabToTitle tab =
+    case tab of
+        Stocks ->
+            "ストックした投稿"
+
+        Posts ->
+            "自分の投稿"
+
+        Follow ->
+            "フォロワー／フォロイー"
+
+
+tabToRoute : Tab -> Route
+tabToRoute tab =
+    case tab of
+        Stocks ->
+            Home
+
+        Posts ->
+            Home
+
+        Follow ->
+            Home
