@@ -9,6 +9,7 @@ import Model exposing (Model, PageState(..))
 import Route exposing (Route(..), parseLocation, routeToPathStr, slugToString)
 import Page.Home as HomePage
 import Page.Item as ItemPage
+import Page.User as UserPage
 
 
 type Msg
@@ -16,6 +17,7 @@ type Msg
     | TransitionPage PageState
     | UpdateHomePage HomePage.Msg
     | UpdateItemPage ItemPage.Msg
+    | UpdateUserPage UserPage.Msg
 
 
 update : Msg -> Model -> (Model, Cmd Msg)
@@ -60,6 +62,8 @@ update msg model =
                     |> mapSecond
                         (\msg_ -> Cmd.map (\a -> UpdateItemPage a) msg_)
 
+        UpdateUserPage msg ->
+            (model, Cmd.none)
 
 -- Private
 

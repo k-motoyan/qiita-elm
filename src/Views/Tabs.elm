@@ -1,18 +1,11 @@
-module Views.Tabs exposing (view, TabItem)
+module Views.Tabs exposing (view)
 
 import Html exposing (Html, div, ul, li, a, text)
 import Html.Attributes exposing (class)
 import Html.Events exposing (onClick)
-import Update exposing (Msg)
 
 
-type alias TabItem =
-    { title: String
-    , msg: Msg
-    }
-
-
-view : List (TabItem) -> Html Msg
+view : List ({ title: String, msg: a }) -> Html a
 view tabItems =
     div [ class "tabs is-centered" ]
         [ ul []
@@ -20,7 +13,7 @@ view tabItems =
         ]
 
 
-tabItemView : TabItem -> Html Msg
+tabItemView : { title: String, msg: a } -> Html a
 tabItemView tabItem =
     li []
         [ a [ onClick tabItem.msg ] [ text tabItem.title] ]
