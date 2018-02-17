@@ -53,8 +53,11 @@ routeToView route model =
                     NotFound.view
 
         Users _ ->
-            UserPage.view |> Html.map UpdateUserPage
-
+            case model.userModel of
+                Just userModel ->
+                    UserPage.view userModel |> Html.map UpdateUserPage
+                Nothing ->
+                    NotFound.view
 
 
 ---- PROGRAM ----
