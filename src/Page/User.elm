@@ -13,6 +13,7 @@ import Views.LoadingIndicator as LoadingIndicator
 
 type alias Model =
     { my: User
+    , currentTab: Tab
     , stockItems: Maybe (List StockItem)
     , followers: Maybe (List User)
     , followees: Maybe (List User)
@@ -22,6 +23,7 @@ type alias Model =
 initModel : User -> Model
 initModel user =
     { my = user
+    , currentTab = Stocks
     , stockItems = Nothing
     , followers = Nothing
     , followees = Nothing
@@ -38,10 +40,10 @@ type Msg
 -- View
 
 
-view : Html Msg
-view =
+view : Model -> Html Msg
+view model =
     div []
-        [ Tabs.view tabItems
+        [ Tabs.view <| tabItems model.currentTab
         , div [ class "contents" ]
             [ LoadingIndicator.view ]
         ]
@@ -53,15 +55,18 @@ type Tab
     | Follow
 
 
-tabItems : List ({ title: String, msg: Msg })
-tabItems =
+tabItems : Tab -> List ({ title: String, isActive: Bool, msg: Msg })
+tabItems currentTab =
     [ { title = Stocks |> tabToTitle
+      , isActive = currentTab == Stocks
       , msg = Stocks |> tabToRoute |> Transit
       }
     , { title = Posts |> tabToTitle
+      , isActive = currentTab == Posts
       , msg = Posts |> tabToRoute |> Transit
       }
     , { title = Follow |> tabToTitle
+      , isActive = currentTab == Posts
       , msg = Follow |> tabToRoute |> Transit
       }
     ]
