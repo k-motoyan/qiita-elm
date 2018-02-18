@@ -7,6 +7,7 @@ import Basics.Extra exposing ((=>))
 import Navigation exposing (Location, newUrl)
 import Model exposing (Model, PageState(..))
 import Route exposing (Route(..), parseLocation, routeToPathStr, slugToString)
+import Entity.Qiita exposing (Item, User)
 import Page.Home as HomePage
 import Page.Item as ItemPage
 import Page.User as UserPage
@@ -97,3 +98,17 @@ transitPage route model =
     succeed (Found route)
         |> perform (\page -> TransitionPage page)
         |> (=>) model
+
+
+selectUserFromItems : List (Item) -> String -> Maybe User
+selectUserFromItems items userID =
+    let
+        isSameUser = \item ->
+            if item.user.id == userID then
+                Just item.user
+            else
+                Nothing
+    in
+        items
+            |> List.filterMap isSameUser
+            |> List.head
