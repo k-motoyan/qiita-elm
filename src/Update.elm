@@ -89,8 +89,12 @@ initRoute route model =
                             |> perform (\msg -> UpdateItemPage msg)
                             |> (=>) model
 
-        Users userId ->
-            (model, Cmd.none)
+        Users userID ->
+            case model.userModel of
+                Just userModel ->
+                    { model | userModel = Just userModel } => Cmd.none
+                Nothing ->
+                    model => Cmd.none
 
 
 transitPage : Route -> Model -> (Model, Cmd Msg)
