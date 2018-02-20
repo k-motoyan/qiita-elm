@@ -3,7 +3,7 @@ module Page.User exposing (Model, initModel, Msg(..), view)
 import Html exposing (Html, div, text)
 import Html.Attributes exposing (class)
 import Route exposing (Route(..))
-import Entity.Qiita exposing (User, StockItem)
+import Entity.Qiita exposing (User, Item, StockItem)
 import Views.Tabs as Tabs
 import Views.LoadingIndicator as LoadingIndicator
 
@@ -15,6 +15,7 @@ type alias Model =
     { my: User
     , currentTab: Tab
     , stockItems: Maybe (List StockItem)
+    , postItems: Maybe (List Item)
     , followers: Maybe (List User)
     , followees: Maybe (List User)
     }
@@ -25,6 +26,7 @@ initModel user =
     { my = user
     , currentTab = Stocks
     , stockItems = Nothing
+    , postItems = Nothing
     , followers = Nothing
     , followees = Nothing
     }
